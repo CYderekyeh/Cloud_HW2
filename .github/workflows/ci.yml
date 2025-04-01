@@ -1,0 +1,42 @@
+name: CI Test
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 預設步驟：檢出程式碼
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # 預設步驟：設置 Node.js 環境
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      # 預設步驟：安裝依賴
+      - name: Install dependencies
+        run: npm install
+
+      # 預設步驟：執行測試
+      - name: Run tests
+        run: npm test
+
+      # 額外步驟 1：自訂訊息或其他操作
+      - name: Additional Step 1 - Custom Message
+        run: |
+          echo "Executing additional step 1: Lint check (skipped)"
+
+      # 額外步驟 2：顯示環境變數資訊（作為示例）
+      - name: Additional Step 2 - Environment Info
+        run: env
+
+      # 結束步驟
+      - name: Post Step - Test Completed
+        run: echo "CI Test completed successfully!"
